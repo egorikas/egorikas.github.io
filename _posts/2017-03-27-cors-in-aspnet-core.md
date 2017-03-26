@@ -1,6 +1,6 @@
 ---
 title:  "CORS in ASP.NET CORE"
-modified: 2017-26-03T22:01:49-03:00
+modified: 2017-03-27T00:10:00-03:00
 categories: 
   - Web
 tags:
