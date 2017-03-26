@@ -67,7 +67,7 @@ You need add some code to your ConfigureServices method
     corsBuilder.AllowAnyMethod();
     corsBuilder.AllowAnyOrigin(); // For everyone
 	
-// If you want to set up a special origin
+    // If you want to set up a special origin
     //corsBuilder.WithOrigins("http://localhost:1111"); 
 
     corsBuilder.AllowCredentials();
