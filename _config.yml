@@ -48,10 +48,10 @@ atom_feed:
   path                   : # blank (default) uses feed.xml
 
 # SEO Related
-google_site_verification :
+google_site_verification : aLJrulEgXvEuu7GRG8aNe1Ryr_IPhkL5GI_cAqXAScY
 bing_site_verification   :
 alexa_site_verification  :
-yandex_site_verification :
+yandex_site_verification : 3cff6506c491c177
 
 # Social Sharing
 twitter:
@@ -70,9 +70,9 @@ social:
 
 # Analytics
 analytics:
-  provider               : false # false (default), "google", "google-universal", "custom"
+  provider               : "google" # false (default), "google", "google-universal", "custom"
   google:
-    tracking_id          :
+    tracking_id          : UA-96290447-1
 
 
 # Site Author
