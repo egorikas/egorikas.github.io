@@ -1,5 +1,6 @@
 ---
 title:  "CORS in ASP.NET CORE"
+description: "How to fix 'Unsupported Media Type' exception and turn on CORS in ASP.NET CORE"
 modified: 2017-03-27T00:10:00-03:00
 categories: 
   - Web
