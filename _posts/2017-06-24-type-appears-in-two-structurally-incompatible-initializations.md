@@ -124,7 +124,7 @@ FROM (
 ```
 When you have disordered statements EF gets crazy and can't translate them to the SQL. So, I think that the reason of problems is disordered arguments.
 
-**Please Note:**  You can EF source code on <a href="https://github.com/aspnet/EntityFramework6">github</a>.
+You can find EF source code on <a href="https://github.com/aspnet/EntityFramework6">github</a>.
 {: .notice--info}
 
 ### Conclusion
