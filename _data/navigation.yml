@@ -8,8 +8,8 @@ main:
   #   url: /year-archive/
   # - title: "By categories"
   #   url: /categories/ 
-   - title: "By tags"
-     url: /tags/
+  # - title: "By tags"
+  #   url: /tags/
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"
