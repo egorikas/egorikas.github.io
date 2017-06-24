@@ -2,8 +2,6 @@
 title:  "Getting closure variable's data from lambda expression in C#"
 description: "How to get closure variable's data from lambda expression with reflection"
 modified: 2017-05-21T22:14:00-03:00
-categories: 
-  - Programming stuff
 tags:
   - unit-tests
   - reflection
