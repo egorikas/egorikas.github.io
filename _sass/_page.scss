@@ -256,7 +256,7 @@
 /*
    Page taxonomy
    ========================================================================== */
-
+    
 .page__taxonomy {
   .sep {
     display: none;
@@ -280,6 +280,15 @@
     text-decoration: none;
     color: $link-color-hover;
   }
+}
+
+.main__page__tags {
+  @extend .page__taxonomy;
+  font-size: .75em;
+}
+
+.main__page__tags-item{
+  @extend .page__taxonomy-item;
 }
 
 
