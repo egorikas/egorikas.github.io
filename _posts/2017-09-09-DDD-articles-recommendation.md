@@ -1,7 +1,7 @@
 ---
 title:  "Awesome cycle of articles about DDD"
 description: "Awesome articles about Domain-driven design"
-modified: 2017-09-29T16:58:00-03:00
+modified: 2017-09-09T16:58:00-03:00
 tags:
   - dot.net
   - DDD
