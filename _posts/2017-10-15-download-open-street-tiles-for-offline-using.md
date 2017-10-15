@@ -31,9 +31,9 @@ First of all, you need to understand that `OSM` is `OSS`. So, when you dowload d
 
 <a href="http://wiki.openstreetmap.org/wiki/Tiles">This page</a> contains some useful info about tiles, such as list of servers, tools and so on.
 As for me I was using official server with 3 subdomains:
-1. <a href="http://a.tile.openstreetmap.org">`a.tile.openstreetmap.org`</a>
-2. <a href="http://b.tile.openstreetmap.org">`b.tile.openstreetmap.org`</a>
-3. <a href="http://c.tile.openstreetmap.org">`c.tile.openstreetmap.org`</a>
+* <a href="http://a.tile.openstreetmap.org">`a.tile.openstreetmap.org`</a>
+* <a href="http://b.tile.openstreetmap.org">`b.tile.openstreetmap.org`</a>
+* <a href="http://c.tile.openstreetmap.org">`c.tile.openstreetmap.org`</a>
 
 ## Implementation
 
@@ -46,13 +46,13 @@ There a few steps, which we need to do for getting them:
 ### 1. Getting coordinates<a name="getting-coordinates"></a>
 
 * Open <a href="http://tools.geofabrik.de/calc/">tiles calculator and choose any area</a>
-<figure>
+<figure class="align-center" style="width: 422px, height: 391px">
 	<a href="/assets/images/osm/choosing.png"><img src="/assets/images/osm/choosing.png"></a>
 	<figcaption>City choosing</figcaption>
 </figure>
 
 * Go to `CD` tab and notice `Osmosis Copy` field
-<figure>
+<figure class="align-center">
 	<a href="/assets/images/osm/coordinates.png"><img src="/assets/images/osm/coordinates.png"></a>
 	<figcaption>City choosing</figcaption>
 </figure>
@@ -60,7 +60,7 @@ There a few steps, which we need to do for getting them:
 You need coordinates of two points. Bottom left and top right. You need them because of tiles presenting system.
 As I said in the first paragraph, tiles are stored in the grid (table) format. For calculating numbers of tiles,
 we need to know coordinates of the left bottom tile (number 1 on the picture) and top right tile. If we know them, we are able to calculate ranges.
-<figure>
+<figure class="align-center">
 	<a href="/assets/images/osm/grid.png"><img src="/assets/images/osm/grid.png"></a>
 	<figcaption>Grid system</figcaption>
 </figure>
