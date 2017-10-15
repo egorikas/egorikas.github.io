@@ -10,12 +10,12 @@ tags:
 Hi everyone! Today I want to talk about downloading open street map tiles for offline usage.
 I'll tell you about my journeys with them and give some links. Let's get started.
 
-### Why did I need them?
+## Why did I need them?
 One of my clients wanted to have a mobile app with offline maps. I was writing `API` for it.
 Packing all arrays and adding maps to them were required because I needed to calculate final sizes of the arrays.
 
 
-### How offline maps works?
+## How offline maps works?
 Let's think about earth's map like about table. We have rows and columns. So, every piece of the land can be represented with the cell in this table.
 You can ask me - "But how zooms works? How can I zoom-in and zoom-out maps in applications. If we have only one table?" - My answer - we have different tables.
 Each one for the level of zoom. For example in our application we used 12-15 levels.
@@ -25,7 +25,7 @@ For example, `level 0` represents the whole world and `level 13` represents a vi
 
 You need at least 2 or 3 zoom levels for getting application's map works well (correct zoom, small viewing issues, users' satisfaction :) )
 
-### Where can I grab them?
+## Where can I grab them?
 
 First of all, you need to understand that `OSM` is `OSS`. So, when you dowload data from their services, you will have to think about the consequences for all community. <a href="https://operations.osmfoundation.org/policies/tiles/">Official policy</a> tells you more about rules and don'ts.
 
@@ -35,7 +35,7 @@ As for me I was using official server with 3 subdomains:
 2. <a href="http://b.tile.openstreetmap.org">`b.tile.openstreetmap.org`</a>
 3. <a href="http://c.tile.openstreetmap.org">`c.tile.openstreetmap.org`</a>
 
-### Implementation
+## Implementation
 
 First of all you need coordinates of the area. 
 I higly recommend <a href="http://tools.geofabrik.de/calc/">this tool</a>.
@@ -43,9 +43,9 @@ I higly recommend <a href="http://tools.geofabrik.de/calc/">this tool</a>.
 Let's imagine we need map of Saint-Petersburg for offile using.
 There a few steps, which we need to do for getting them:
 
-#### 1. Getting coordinates<a name="getting-coordinates"></a>
+### 1. Getting coordinates<a name="getting-coordinates"></a>
 
-1. Open <a href="http://tools.geofabrik.de/calc/">tiles calculator</a>
+1. Open <a href="http://tools.geofabrik.de/calc/">tiles calculator and choose any area</a>
 <figure>
 	<a href="/assets/images/osm/choosing.png"><img src="/assets/images/osm/choosing.png"></a>
 	<figcaption>City choosing</figcaption>
@@ -65,7 +65,7 @@ we need to know coordinates of the left bottom tile (number 1 on the picture) an
 	<figcaption>Grid system</figcaption>
 </figure>
 
-#### 2. Writing code
+### 2. Writing code
 
 1. Go to the github and see <a href="https://github.com/OsmSharp/tiles">this package</a>. It contains the great example of 
 tiles abstraction writing with C# language.
@@ -89,7 +89,7 @@ tiles abstraction writing with C# language.
   var tiles = new TileRange(minX, minY, maxX, maxY, zoom);
 ```
 
-#### 3. Downloading tiles
+### 3. Downloading tiles
 Fow downloading tiles. You need to do `GET` requests in `{server}.tile.openstreetmap.org/{zoom}/{x}/{y}.png` format.
 Where:
 1. `{server}` - symbol of server (a,b,c)
@@ -104,7 +104,7 @@ Where:
     }
 ```
 
-#### 4. Example of downloading tiles
+### 4. Example of downloading tiles
 Example below is just my personal implementation and I don't force you to do it in the same way
 ```csharp
         private readonly string[] _serverEndpoints = {"a", "b", "c"};
@@ -123,13 +123,15 @@ Example below is just my personal implementation and I don't force you to do it 
         }
 ```
 `ParallelForEachAsync` available on <a href="https://github.com/tyrotoxin/AsyncEnumerable">github</a>.
+
+
 `maxDegreeOfParalellism` equals two because of <a href="https://operations.osmfoundation.org/policies/tiles/">official policy</a>.
 
 
-### P.S.
+## P.S.
 
 I need to say again, that `OSM` is `OSS` project. This means that you shouldn't build software with massive calls to `OSM` endpoints. If you do this, your `IP` will be ban. If you need to serve a lot of client requests, you can create your own tiles server or use paid-solutions.
 
-### Conclusion
+## Conclusion
 
 That's all. I'll be happy, It this article helps you.
