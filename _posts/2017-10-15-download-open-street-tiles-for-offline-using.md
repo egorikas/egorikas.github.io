@@ -45,13 +45,13 @@ There a few steps, which we need to do for getting them:
 
 ### 1. Getting coordinates<a name="getting-coordinates"></a>
 
-1. Open <a href="http://tools.geofabrik.de/calc/">tiles calculator and choose any area</a>
+* Open <a href="http://tools.geofabrik.de/calc/">tiles calculator and choose any area</a>
 <figure>
 	<a href="/assets/images/osm/choosing.png"><img src="/assets/images/osm/choosing.png"></a>
 	<figcaption>City choosing</figcaption>
 </figure>
 
-2. Go to `CD` tab and notice `Osmosis Copy` field
+* Go to `CD` tab and notice `Osmosis Copy` field
 <figure>
 	<a href="/assets/images/osm/coordinates.png"><img src="/assets/images/osm/coordinates.png"></a>
 	<figcaption>City choosing</figcaption>
@@ -67,16 +67,16 @@ we need to know coordinates of the left bottom tile (number 1 on the picture) an
 
 ### 2. Writing code
 
-1. Go to the github and see <a href="https://github.com/OsmSharp/tiles">this package</a>. It contains the great example of 
+* Go to the github and see <a href="https://github.com/OsmSharp/tiles">this package</a>. It contains the great example of 
 tiles abstraction writing with C# language.
 
-2. Create two tiles with coordinates, which you got in <a href="#getting-coordinates">getting coordinates section</a>.
+* Create two tiles with coordinates, which you got in <a href="#getting-coordinates">getting coordinates section</a>.
 
 ```csharp
    var leftBottom = Tile.CreateAroundLocation(double.Parse("59.17"), double.Parse("28.63"), 14);
    var topRight = Tile.CreateAroundLocation(double.Parse("60.85"), double.Parse("31.81"), 14);
 ```
-3. Then create `TileRange` and be ready for dowloading tiles :)
+* Then create `TileRange` and be ready for dowloading tiles :)
 
 ```csharp
   //dirty, but obvious :)
@@ -92,10 +92,10 @@ tiles abstraction writing with C# language.
 ### 3. Downloading tiles
 Fow downloading tiles. You need to do `GET` requests in `{server}.tile.openstreetmap.org/{zoom}/{x}/{y}.png` format.
 Where:
-1. `{server}` - symbol of server (a,b,c)
-2. `{zoom}` - level of zoom
-3. `{x}` - x position of the tile
-4. `{y}` - y postion of the tile 
+* `{server}` - symbol of server (a,b,c)
+* `{zoom}` - level of zoom
+* `{x}` - x position of the tile
+* `{y}` - y postion of the tile 
 
 ```csharp
     foreach(var tile in tiles){
