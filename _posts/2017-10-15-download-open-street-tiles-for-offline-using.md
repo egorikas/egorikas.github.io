@@ -1,7 +1,7 @@
 ---
 title:  "Download open street map tiles for offline usage"
 description: "Instruction about downloading osm tiles for offile usage with C#"
-modified: 2017-15-10T13:23:00-03:00
+modified: 2017-10-15T13:23:00-03:00
 tags:
   - dot.net
   - open street map
