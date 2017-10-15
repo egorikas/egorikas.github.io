@@ -46,23 +46,20 @@ There a few steps, which we need to do for getting them:
 ### 1. Getting coordinates<a name="getting-coordinates"></a>
 
 * Open <a href="http://tools.geofabrik.de/calc/">tiles calculator and choose any area</a>
-<figure class="align-center" style="width: 422px, height: 391px">
+<figure class="align-center" style="width: 422px; height: 391px">
 	<a href="/assets/images/osm/choosing.png"><img src="/assets/images/osm/choosing.png"></a>
-	<figcaption>City choosing</figcaption>
 </figure>
 
 * Go to `CD` tab and notice `Osmosis Copy` field
-<figure class="align-center">
+<figure class="align-center" style="width: 284px; height: 494px">
 	<a href="/assets/images/osm/coordinates.png"><img src="/assets/images/osm/coordinates.png"></a>
-	<figcaption>City choosing</figcaption>
 </figure>
 
 You need coordinates of two points. Bottom left and top right. You need them because of tiles presenting system.
 As I said in the first paragraph, tiles are stored in the grid (table) format. For calculating numbers of tiles,
 we need to know coordinates of the left bottom tile (number 1 on the picture) and top right tile. If we know them, we are able to calculate ranges.
-<figure class="align-center">
+<figure class="align-center" style="width: 422px; height: 391px">
 	<a href="/assets/images/osm/grid.png"><img src="/assets/images/osm/grid.png"></a>
-	<figcaption>Grid system</figcaption>
 </figure>
 
 ### 2. Writing code
