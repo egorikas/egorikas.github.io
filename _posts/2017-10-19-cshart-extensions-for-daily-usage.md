@@ -1,7 +1,7 @@
 ---
 title:  "C# extensions for daily usage"
 description: "List of C# extensions for daily usage. I am using them in my projects"
-modified: 2017-19-10T22:40:00-03:00
+modified: 2017-10-19T22:40:00-03:00
 tags:
   - dot.net
   - .net core
