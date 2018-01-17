@@ -22,7 +22,7 @@ I won't talk too much about theory, you only need to know, that `Ethereum` is a 
 ## A bit of code
 So, why don't we write a simple `Hello World` program?
 
-```solidity
+```javascript
 pragma solidity ^0.4.19;
  
 contract HelloWorld {
@@ -39,7 +39,7 @@ We've done. That's all. `contract` is some kind of classes for `Ethereum` (It's 
 ## A bit of code #2
 For the second example we'll create a contract with changing it's state.
 
-```solidity
+```javascript
 pragma solidity ^0.4.19;
 
 contract Speaker {    
