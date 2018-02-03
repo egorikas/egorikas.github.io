@@ -1,11 +1,12 @@
 ---
 title:  "The simplest crowdsale contract"
 description: "Creating smart contracts for crowdsale is easier than you think"
-modified: 2018-01-17T12:20:00-03:00
+modified: 2018-02-03T12:39:00-03:00
 tags:
   - solidity
   - blockchain
   - ethereum
+  - ICO  
 ---
 
 If we start to speak about 2017, I’ll say “That year was about cryptocurrency. Even my mom knows about Bitcoin”. Also that year stand in the people’s memory like age of ICO.
