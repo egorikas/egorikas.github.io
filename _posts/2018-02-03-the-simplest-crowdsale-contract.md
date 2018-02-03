@@ -16,9 +16,10 @@ If we start to speak about 2017, I’ll say “That year was about cryptocurrenc
 What is `ICO`? It’s `Initial Coin Offering`. Simple explanation is about making new cryptocurrency on the base of Ethereum blockchain. I won’t tell you details about working process of that blockchain, because we are here because of code.
 What is smart contract? That is a piece of code uploaded to the blockchain and working there. For writing them is used 
 `Solidity` language. In the example below you can watch the simplest smart contract.
-pragma solidity ^0.4.18;
 
 ```javascript
+pragma solidity ^0.4.18;
+
 contract HelloWorld {
     
     function getData() public constant returns (string) {
