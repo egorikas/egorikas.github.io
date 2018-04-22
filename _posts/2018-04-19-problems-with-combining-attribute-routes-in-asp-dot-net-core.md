@@ -3,7 +3,6 @@ title:  "The problems with combining attribute routes in ASP.NET Core"
 description: "How to solve and tine reminder to myself "
 modified: 2018-04-19T15:24:00-03:00
 tags:
-  - C#
   - .net
   - asp.net core
 ---
