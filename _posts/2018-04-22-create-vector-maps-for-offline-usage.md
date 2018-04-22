@@ -51,7 +51,7 @@ Coordinates for `left|bottom|right|top`, you can check at <a href="http://tools.
 
 ## An hour later ...
 
-Generation one map takes about an hour. So, just wait and you got the result.
+Generating of one map takes about an hour. So, just wait and you get a result.
 
 ## P.S. for C# developers
 
