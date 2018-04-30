@@ -5,6 +5,7 @@ modified: 2018-04-19T15:24:00-03:00
 tags:
   - .net
   - asp.net core
+  - .net core
 ---
 
 Hello everyone!
@@ -45,4 +46,4 @@ So, the solution is
 
 ## Conclusion
 
-Thatâ€™s all, thank you for you attention!
+That’s all, thank you for you attention!
