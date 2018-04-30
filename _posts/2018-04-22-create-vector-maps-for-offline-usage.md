@@ -5,8 +5,8 @@ modified: 2018-04-22T23:24:00-03:00
 tags:
   - open source 
   - open street map
-  - .net
   - .net core
+  - .net
 ---
 
 Hi everyone! Today I want to talk about generating vector tiles for offline using from OSM metadata.
