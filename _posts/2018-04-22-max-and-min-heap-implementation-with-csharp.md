@@ -136,7 +136,7 @@ Gayle Laakmann McDowell gives a good <a href="https://www.youtube.com/watch?v=t0
 We are using array as a storage for members of the heap. And doing a few calculation after every add/remove from the top. (The implementation is the same as in the <a href="https://www.youtube.com/watch?v=t0Cq6tVNRBA">video</a>).
 
 ## Max heap
-If you want to create `Max heap`, you need to chane those methods:
+If you want to create `Max heap`, you need to change those methods:
 
 ```csharp
             private void ReCalculateDown()
@@ -173,7 +173,7 @@ If you want to create `Max heap`, you need to chane those methods:
 ```
 
 ## P.S.
-Solving tasks on <a href="https://www.hackerrank.com/">hackerrank</a> is fun. And I recommend you to try.
+Solving tasks on <a href="https://www.hackerrank.com/">hackerrank</a> is fun. And I recommend you to try it.
 
 ## Conclusion
 
