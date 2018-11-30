@@ -15,14 +15,6 @@ Hi everyone! Today I want to talk about implementation of Max and Min heap with 
 Three or four month ago I understood that resolving tasks at <a href="https://www.hackerrank.com/">hackerrank</a> can make you better programmer and give basic understanding of efficient algorithms.
 There a lot of task there, which should be implemented with `heap`. But we don't have `heap` in `.net` core library.
 
-## Why did I need them?
-Once, I wrote a  about <a href="http://egorikas.com/download-open-street-tiles-for-offline-using/">blog-post</a> dowloading open street maps tiles.
-After release, client decided to switch application from usual tiles to vector ones. And that was the strange journey, but I want to share this expirience with you.
-
-* <a href="https://www.hackerrank.com/challenges/ctci-find-the-running-median/problem">first</a>
-* <a href="https://www.hackerrank.com/challenges/qheap1/problem">second</a>
-* <a href="https://www.hackerrank.com/challenges/jesse-and-cookies/problem">third</a>
-
 ## Implementation
 
 There are two common ways for implementing heaps. The first one is using list of nodes, where every node contains two child nodes.
