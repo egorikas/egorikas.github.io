@@ -12,7 +12,7 @@ tags:
 Hi everyone! Today I want to talk about implementation of Max and Min heap with C#.
 
 ## The reason why you can be needed them
-Three or four month ago I understood that resolving tasks at <a href="https://www.hackerrank.com/">hackerrank</a> can make you better programmer and give basic understanding of efficient algorithms.
+Three or four month ago I understood that resolving tasks at <a href="https://www.hackerrank.com/">hackerrank</a> can make you better programmer and gives basic understanding of efficient algorithms.
 There a lot of task there, which should be implemented with `heap`. But we don't have `heap` in `.net` core library.
 
 ## Implementation
