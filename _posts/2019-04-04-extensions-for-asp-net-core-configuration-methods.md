@@ -12,7 +12,7 @@ Hi everyone! Today I want to talk about a configuration process of `ASP.NET Core
 ## Large projects and ASP.NET Core
 
 In my experience looking through `ConfigureServices` in a big project is a really exhausting experience.
-If your project uses `Swagger`, `EF` and `CORS`-configuration, I suppose, you alredy undertand me.
+If your project uses `Swagger`, `EF` and `CORS`-configuration, I suppose, you alredy understand me.
 
 ## Using extensions for `ConfigureServices` methods
 
