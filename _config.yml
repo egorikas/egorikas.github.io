@@ -10,7 +10,7 @@ locale                   : "en"
 title                    : "Egor Grishechko's blog"
 title_separator          : "-"
 name                     : "Egor Grishechko's blog"
-description              : "Hi! I am Egor Grishechko. And this is my personal blog. Why another blog? Why not. I am sharing some of my experience here."
+description              : "Hi! I am Egor Grishechko. I am a software developer. And this is my personal blog. Why another blog? Why not. I am sharing some of my experience here."
 url                      : "https://egorikas.com"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -79,10 +79,10 @@ analytics:
 author:
   name             : "Egor Grishechko"
   avatar           : "/assets/images/bio-photo.jpg"
-  bio              : "Hi! I'm a software developer from Moscow, Russia. I really enjoy writing C# and JavaScript code. Currently I am working for a blockchain startup."
+  bio              : "Hi! I'm a software developer from Moscow, Russia. Currently I am working for [insolar](https://insolar.io/). I write code in Go and study how to build reliable distributed systems. Also I'm in love with C#"
   location         : "Moscow, Russia"
-  email            : 
-  uri              : 
+  email            :
+  uri              :
   bitbucket        :
   codepen          :
   dribbble         :
