@@ -79,7 +79,7 @@ analytics:
 author:
   name             : "Egor Grishechko"
   avatar           : "/assets/images/bio-photo.jpg"
-  bio              : "Hi! I'm a software developer from Moscow, Russia. Currently I am working for [insolar](https://insolar.io/). I write code in Go and study how to build reliable distributed systems. Also I'm in love with C#"
+  bio              : "Hi! I'm a software developer. Currently I am working in a blockchain startup (Insolar). I write code in Go and study how to build reliable distributed systems. Also I'm in love with C#"
   location         : "Moscow, Russia"
   email            :
   uri              :
