@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en"
-title                    : "Egor Grishechko's blog"
+title                    : "Personal blog"
 title_separator          : "-"
-name                     : "Egor Grishechko's blog"
-description              : "Hi! I am Egor Grishechko. I am a software developer. And this is my personal blog. Why another blog? Why not. I am sharing some of my experience here."
+name                     : "Personal blog"
+description              : "Hi! I am Egor Grishechko. I am a software engineer. And this is my personal blog. It's outdated currently and I am not actively maintaining it."
 url                      : "https://egorikas.com"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -78,9 +78,9 @@ analytics:
 # Site Author
 author:
   name             : "Egor Grishechko"
-  avatar           : "/assets/images/bio-photo.jpg"
-  bio              : "Hi! I'm a software developer. Currently I am working in a blockchain startup (Insolar). I write code in Go and study how to build reliable distributed systems. Also I'm in love with C#"
-  location         : "Moscow, Russia"
+  avatar           : "/assets/images/bio-photo-2.jpg"
+  bio              : "Hi! I'm a software engineer with a strong focus on platform engineering. Currently, I help Uber with building the Odin platform. I am not writing on my blog nowadays."
+  location         : "Århus, Denamrk"
   email            :
   uri              :
   bitbucket        :
