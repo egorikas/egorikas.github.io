@@ -5,6 +5,9 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # `jekyll serve`. If you change this file, please restart the server process.
 
+# Theme
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+
 # Site Settings
 locale                   : "en"
 title                    : "Personal blog"
@@ -80,7 +83,7 @@ author:
   name             : "Egor Grishechko"
   avatar           : "/assets/images/bio-photo-2.jpg"
   bio              : "Hi! I'm a software engineer with a strong focus on platform engineering. Currently, I help Uber with building the Odin platform. I am not writing on my blog nowadays."
-  location         : "Århus, Denamrk"
+  location         : "Århus, Denmark"
   email            :
   uri              :
   bitbucket        :
@@ -178,12 +181,13 @@ timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
-gems:
+plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
-  - jemoji
+  #- jemoji
+  - jekyll-include-cache
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -192,6 +196,7 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  - jekyll-include-cache
 
 
 # Archives

@@ -46,4 +46,4 @@ So, the solution is
 
 ## Conclusion
 
-That’s all, thank you for you attention!
+That is all, thank you for you attention!
