@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# extensions for daily usage - Egor Grishechko's Blog</title>
+    <meta name="description" content="List of C# extensions for daily usage. I am using them in my projects">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>C# extensions for daily usage</h1>
+                <div class="post-meta">
+                    <time datetime="2017-10-19">October 19, 2017</time>
+                    <div class="tags"><span class="tag">dot.net</span> <span class="tag">.net core</span> <span class="tag">open source</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to share my extensions which I am using in my daily routine.</p>
+
+<p>I want to say, that I used them in every standalone project I worked for (and sometimes job projects)</p>
+<a href="https://github.com/CodeBeavers/EverydayExtensionsCsharp">Go and grab them</a>
+
+<p>I <strong>won't</strong> update this article in the future. So, check link above for getting newest ones.</p>
+
+<h2>Collection extensions</h2>
+
+<pre><code class="language-csharp">public static List&lt;T&gt; NullToEmpty&lt;T&gt;(this List&lt;T&gt; source)
+{
+    return source ?? new List&lt;T&gt;();
+}
+</code></pre>
+
+<pre><code class="language-csharp">public static T[] ExpandArray&lt;T&gt;(this T[] array, T item)
+{
+    if (array == null || array.Length == 0)
+    {
+        array = new[] { item };
+        return array;
+    }
+
+    var expandedArray = new T[array.Length + 1];
+    Array.Copy(array, expandedArray, array.Length);
+    expandedArray[array.Length] = item;
+
+    return expandedArray;
+}
+</code></pre>
+
+<h2>String's extensions</h2>
+
+<pre><code class="language-csharp">public static bool IsNullOrEmpty(this string value)
+{
+    return string.IsNullOrEmpty(value);
+}
+</code></pre>
+
+<pre><code class="language-csharp">public static bool NotNullOrEmpty(this string value)
+{
+    return !string.IsNullOrEmpty(value);
+}
+</code></pre>
+
+<h2>Json helpers (JSON.NET is required)</h2>
+
+<pre><code class="language-csharp">public static string ToJson&lt;T&gt;(this T obj)
+{
+    return JsonConvert.SerializeObject(obj, Formatting.Indented);
+}
+</code></pre>
+
+<h2>Entity Framework</h2>
+
+<pre><code class="language-csharp">public static IQueryable&lt;TEntity&gt; Includes&lt;TEntity&gt;(this IQueryable&lt;TEntity&gt; source, 
+    params Expression&lt;Func&lt;TEntity, object&gt;&gt;[] includes)
+    where TEntity : class
+{
+    foreach (var include in includes)
+    {
+        source = source.Include(include);
+    }
+
+    return source;
+}
+</code></pre>
+
+<h2>Conclusion</h2>
+
+That's all. I'll be happy, If this link helps you.
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

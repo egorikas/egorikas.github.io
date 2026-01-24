@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS in ASP.NET CORE - Egor Grishechko's Blog</title>
+    <meta name="description" content="How to fix 'Unsupported Media Type' exception and turn on CORS in ASP.NET CORE">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>CORS in ASP.NET CORE</h1>
+                <div class="post-meta">
+                    <time datetime="2017-03-27">March 27, 2017</time>
+                    <div class="tags"><span class="tag">ASP.NET</span> <span class="tag">NET.CORE</span> <span class="tag">AngularJs</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>In my spare time I am writing applications with technologies, which are newer than my job project's ones.</p>
+<p>So, I decided to build a simple app using <code>ASP.NET CORE</code> and <code>AngularJs</code> (version 2).</p>
+
+<p>In the time of writting this project, I was getting a strange behaivor of my requests from <code>javascript</code> to <code>server-side</code>.</p>
+
+<pre><code class="language-javascript">    let body: any = {&quot;Email&quot;: &quot;value1&quot;, &quot;Password&quot;: &quot;value2&quot;};
+    let url = &quot;http://localhost:5000/api/user/login&quot;;
+    let response: any;
+    let headers = new Headers({&#39;Content-Type&#39;: &#39;application/json&#39;});
+    let options = new RequestOptions({headers: headers});
+    this.http.post(url, body, options).subscribe(
+      data =&gt; {
+        response = data
+      },
+      err =&gt; console.error(err),
+      () =&gt; {
+        console.log(response)
+      });
+</code></pre>
+
+<p>My code didn't want to set custom <code>Content-type</code> headers. When I send a request, I got <code>415 (Unsupported Media Type)</code> and <code>No 'Access-Control-Allow-Origin' header is present</code> </p>
+<p>exception in console.</p>
+
+<h3>Errors' screenshot</h3>
+
+<figure><a href="/assets/images/2017-03-26_22-45-27.png"><img src="/assets/images/2017-03-26_22-45-27.png" alt="Screenshot of Google Chrome's console"></a><figcaption>Screenshot of Google Chrome's console</figcaption></figure>
+
+<h3>Searching for solution</h3>
+
+First of all, I thought about problems with <code>HttpModule</code> of <code>Angular</code>. I even created a <a href="http://stackoverflow.com/questions/42749192/angular2-http-cant-send-post-with-body-and-set-content-type/">stackoverflow question</a>.
+Then, I started to think that the problem may be at the server side. And it was. I had forgotten to set up <code>CORS</code> settings for for my back-end app.
+
+<h3>Configuring CORS for ASP.NET CORE</h3>
+
+First of all installing of <code>Microsoft.AspNetCore.Cors</code> is required. You can do this by GUI or just run <code>Install-Package Microsoft.AspNetCore.Cors</code> in Package Manager Console.
+Then you should  modify your <code>Startup.cs</code>.
+
+<h3>Step 1. Modify <code>ConfigureServices</code> method</h3>
+
+You need add some code to your <code>ConfigureServices</code> method
+
+<pre><code class="language-csharp"> public void ConfigureServices(IServiceCollection services)
+ {
+    //CORS
+    var corsBuilder = new CorsPolicyBuilder();
+    corsBuilder.AllowAnyHeader();
+    corsBuilder.AllowAnyMethod();
+    corsBuilder.AllowAnyOrigin(); // For everyone
+
+    // If you want to set up a special origin
+    //corsBuilder.WithOrigins(&quot;http://localhost:1111&quot;); 
+
+    corsBuilder.AllowCredentials();
+
+    services.AddCors(options =&gt;
+    {
+        options.AddPolicy(&quot;MyCorsPolicy&quot;, corsBuilder.Build());
+    });
+
+	// other stuff
+  }
+</code></pre>
+
+<h3>Step 2. Modify <code>Configure</code> method</h3>
+
+Then you need to modify <code>Configure</code> method
+
+<pre><code class="language-csharp">public void Configure(IApplicationBuilder app, 
+					  IHostingEnvironment env, 
+					  ILoggerFactory loggerFactory)
+{
+    app.UseCors(&quot;MyCorsPolicy&quot;);	
+	// other stuff	
+    app.UseMvc();
+}
+</code></pre>
+
+<strong>Please Note:</strong>  It's important to put <code>app.UseCors("MyCorsPolicy")</code> before <code>app.UseMvc()</code>. For details see <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware">official docs</a>. 
+
+<h3>Conclusion</h3>
+
+That's all. I'll be happy, If this article helps you. 
+
+<a href="https://docs.microsoft.com/en-us/aspnet/core/security/cors">Docs about CORS in ASP.NET CORE</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

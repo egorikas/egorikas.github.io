@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using goroutines on loop iterator variables can hurt - Egor Grishechko's Blog</title>
+    <meta name="description" content="Using goroutines on loop iterator variables can lead to painfull behaivor of the program.">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>Using goroutines on loop iterator variables can hurt</h1>
+                <div class="post-meta">
+                    <time datetime="2019-04-26">April 26, 2019</time>
+                    <div class="tags"><span class="tag">go</span> <span class="tag">goroutines</span> <span class="tag">concurrent programming</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to share some personal experience about painfull behaivor of a program, If you're mistaken in using goroutines on loop iterator.</p>
+<p>Last 9 months I work with <code>Go</code> as a primary programming language. Today, I saw method with this common mistake and decided to write an article about it.</p>
+
+<h2>What is the problem?</h2>
+When you are itterating collection in Go, sometimes you are calling the result of itterating in gorutine. For example, you might write something like this:
+
+<pre><code class="language-go">items := []string{&quot;first&quot;, &quot;second&quot;, &quot;third&quot;}
+
+for _, item := range items {
+	go func() {
+		println(item)
+	}()
+}
+</code></pre>
+
+<p>If you run the example, it is highly possible, the output will be :</p>
+<pre><code>third
+third
+third
+</code></pre>
+
+<p>It's not an expected result, you might say. it happens due to <code>item</code> variable is actually a single variable. When we are itterating through a slice, each element of it, just is put to <code>item</code> variable. Because the closures (<code>println(item)</code>) just bound the variable, there is a change that when you are running the code, you will see <code>third</code>, because this is a last element of the slice, and <code>for loop</code> works a bit faster then running <code>gorutines</code>. Usually gorotines are run after finishing itterating through small collections. When it happens, we will have an unexpected behaviour of our programms.</p>
+
+<p>The better way to write that type of a loop is:</p>
+
+<pre><code class="language-go">items := []string{&quot;first&quot;, &quot;second&quot;, &quot;third&quot;}
+
+for _, item := range items {
+	go func(item string) {
+		println(item)
+	}(item)
+}
+</code></pre>
+
+<p>If you run the example, it is highly possible, the output will be :</p>
+<pre><code>first
+third
+second
+</code></pre>
+
+<p>When we add <code>item</code> as a parameter to the close, <code>item</code> is bound by closure on every iteration and every goroutine has its own <code>item</code>, that is placed on the stack of every goroutine.</p>
+<p>Also, it's important that order of output isn't consistent, because ordering of <code>goroutines</code> isn't guaranteed. </p>
+
+<h2>Additional info</h2>
+
+For more info you can read <a href="https://github.com/golang/go/wiki/CommonMistakes">this</a> and <a href="https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/">that</a>
+
+<h2>Conclusion</h2>
+
+That’s all, thank you for you attention!
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

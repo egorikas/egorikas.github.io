@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The problems with combining attribute routes in ASP.NET Core - Egor Grishechko's Blog</title>
+    <meta name="description" content="How to solve and tine reminder to myself ">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>The problems with combining attribute routes in ASP.NET Core</h1>
+                <div class="post-meta">
+                    <time datetime="2018-04-19">April 19, 2018</time>
+                    <div class="tags"><span class="tag">.net</span> <span class="tag">asp.net core</span> <span class="tag">.net core</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hello everyone!</p>
+
+<p>Currently I am developing an api with using of ASP.NET Core. Two days ago I notices that my route didn't combine (I am using route attributes).</p>
+
+<p>So, I was writing something like in the code block below.</p>
+
+<pre><code class="language-csharp">    [Route(&quot;users&quot;)]
+    public class UserController : Controller
+    {
+        [Route(&quot;/{userId}/email&quot;)]
+        public async Task UpdateEmail(int userId, [FromBody]UpdateEmailRequest request)
+        {
+            ...
+        }
+    }
+</code></pre>
+
+<p>And for the controller and the routes I've got <code>/{userId}/email</code> not <code>users/{userId}/email</code>.</p>
+<p>The problem was in the <code>/</code> before the child route.</p>
+
+<p>So, the solution is </p>
+
+<pre><code class="language-csharp">    [Route(&quot;users&quot;)]
+    public class UserController : Controller
+    {
+        [Route(&quot;{userId}/email&quot;)]
+        public async Task UpdateEmail(int userId, [FromBody]UpdateEmailRequest request)
+        {
+            ...
+        }
+    }
+</code></pre>
+
+<h2>Conclusion</h2>
+
+That is all, thank you for you attention!
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

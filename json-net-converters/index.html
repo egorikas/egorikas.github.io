@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unix timestamp and boolean converters for Json.NET - Egor Grishechko's Blog</title>
+    <meta name="description" content="The most useful additional converters for Json.net">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>Unix timestamp and boolean converters for Json.NET</h1>
+                <div class="post-meta">
+                    <time datetime="2017-08-28">August 28, 2017</time>
+                    <div class="tags"><span class="tag">dot.net</span> <span class="tag">json.net</span> <span class="tag">opensource</span> <span class="tag">tools</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to talk about two little additional converters for <code>Json.NET</code> which can make your life easier and more fun.</p>
+
+<p>A few weeks ago, I decided to wrote a simple api-consumer. While I was creating this app I found some problems with transformation data from json to objects.</p>
+<p>For solving them I created two converters for <code>Json.NET</code></p>
+
+<h3>Unix timestamp to DateTime</h3>
+
+An api returns dates in format of unix timestamps, So, what should we do? Exactly, create our own <code>custom converter</code>. I did all the job for you. You can grab it from <code>nuget</code>
+
+<code>Install-Package UnixTimeConverter</code>
+
+or get it from <a href="https://github.com/egorikas/UnixTimeConverter">Github</a> and change code if you want. But it will be better, if you create a <code>pr</code> ;)
+
+#### Example of UnixTimeConverter usage
+
+<pre><code class="language-csharp">namespace UsageExample
+{
+    public class ApiData
+    {
+        [JsonConverter(typeof(UnixTimeConverter))]
+        public DateTime Date { get; set; }
+    }
+
+    public class ConverterTest
+    {
+        [Fact]
+        public void HappyPath()
+        {
+            //Arrange
+            var apiJson = &quot;{ Date : 1321009871 }&quot;;
+
+            //Act
+            var result = JsonConvert.DeserializeObject&lt;ApiData&gt;(apiJson);
+
+            //Assert
+            Assert.Equal(new DateTime(2011, 11, 11, 11, 11, 11, DateTimeKind.Utc), result.Date);
+        }
+    }
+}
+</code></pre>
+
+<h3>Number to bool converter for Json.NET</h3>
+My second problem was about converting <code>booleans</code> from <code>numbers</code>. It's a common situation when endpoint returns <code>"bool"</code> values as 1 or 0.
+So, I've solved this problem too. You can install <code>converter</code>
+
+<code>Install-Package BooleanConverter</code>
+
+or get it from <a href="https://github.com/egorikas/BooleanConverter">Github</a>
+
+#### Example of BooleanConverter usage
+
+<pre><code class="language-csharp">namespace UsageExample
+{
+    public class ApiData
+    {
+        [JsonConverter(typeof(BooleanConverter))]
+        public bool Field { get; set; }
+    }
+
+    public class ConverterTest
+    {
+        [Fact]
+        public void SerializeHappyPath()
+        {
+            //Arrange
+            var apiJson = &quot;{ Field : 1}&quot;;
+
+            //Act
+            var result = JsonConvert.DeserializeObject&lt;ApiData&gt;(apiJson);
+
+            //Assert
+            Assert.Equal(true, result.Field);
+        }
+    }
+}
+</code></pre>
+<h3>P.S.</h3>
+I asked maintainer <code>Json.NET</code> about <code>PR</code> with converters to the library. But I was given an answer, that he didn't like the idea of adding code to core library due to size issues.
+
+<a href="https://github.com/JamesNK/Newtonsoft.Json/issues/1387">Github's issue</a>
+
+<h3>Conclusion</h3>
+
+That's all. I'll be happy, If this article and tools helps you.
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

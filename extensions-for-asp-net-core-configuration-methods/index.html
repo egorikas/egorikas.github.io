@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You should use extension methods for ASP.NET Core configuration methods - Egor Grishechko's Blog</title>
+    <meta name="description" content="Thoughts about a configuration process of ASP.NET Core">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>You should use extension methods for ASP.NET Core configuration methods</h1>
+                <div class="post-meta">
+                    <time datetime="2019-04-04">April 04, 2019</time>
+                    <div class="tags"><span class="tag">asp.net core</span> <span class="tag">.net core</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to talk about a configuration process of <code>ASP.NET Core</code>.</p>
+
+<h2>Large projects and ASP.NET Core</h2>
+
+In my experience looking through <code>ConfigureServices</code> in a big project is a really exhausting experience.
+If your project uses <code>Swagger</code>, <code>EF</code> and <code>CORS</code>-configuration, I suppose, you alredy understand me.
+
+<h2>Using extensions for <code>ConfigureServices</code> methods</h2>
+
+In my projects I tend to use extensions methods for <code>IServiceCollection</code> due to improvement of readability of <code>ConfigureServices</code> method.
+
+Let's imagine, that we have a standard pack of configuration for ASP.NET Core application.
+
+<pre><code class="language-csharp">        public void ConfigureServices(IServiceCollection services)
+        {
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =&gt; { options.AddPolicy(&quot;MyCorsPolicy&quot;, corsBuilder.Build()); });
+
+            services.AddDbContext&lt;DotNetRuServerContext&gt;(options =&gt;
+                options.UseSqlServer(configuration.GetConnectionString(&quot;Database&quot;)));
+
+            services.AddTransient&lt;IAuthService, AuthService&gt;();
+
+            services
+                .AddMvc(options =&gt; { options.Filters.Add(typeof(ExceptionFilter)); })
+                .AddJsonOptions(options =&gt;
+                {
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(c =&gt;
+            {
+                c.CustomSchemaIds(x =&gt; x.FullName);
+                c.SwaggerDoc(&quot;v1&quot;, new Info {Title = &quot;Example&quot;, Version = &quot;v1&quot;});
+                c.DescribeAllEnumsAsStrings();
+            });
+        }
+
+</code></pre>
+
+<p>Looks complicated? Yes, it does. But what if we put all the code to the extension methods of <code>IServiceCollection</code>?</p>
+
+<pre><code class="language-csharp">
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.ConfigureCors();
+            services.ConfigureDependencies(_configuration);
+            services.ConfigureMVC(_configuration);            
+            services.ConfigureSwagger();
+        }
+
+        // Usually I put those methods to different files as Application/Extensions/DependencyExtensions.cs and etc
+        public static void ConfigureMVC(this IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddMvc(options =&gt; { options.Filters.Add(typeof(ExceptionFilter)); })
+                .AddJsonOptions(options =&gt;
+                {
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+        }
+
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =&gt;
+            {
+                c.CustomSchemaIds(x =&gt; x.FullName);
+                c.SwaggerDoc(&quot;v1&quot;, new Info {Title = &quot;DotNetRu&quot;, Version = &quot;v1&quot;});
+                c.DescribeAllEnumsAsStrings();
+
+                var security = new Dictionary&lt;string, IEnumerable&lt;string&gt;&gt;
+                {
+                    {&quot;Bearer&quot;, new string[] { }},
+                };
+                c.AddSecurityDefinition(&quot;Bearer&quot;, new ApiKeyScheme
+                {
+                    Description =
+                        &quot;JWT Authorization header using the Bearer scheme. Example: \&quot;Authorization: Bearer {token}\&quot;&quot;,
+                    Name = &quot;Authorization&quot;,
+                    In = &quot;header&quot;,
+                    Type = &quot;apiKey&quot;
+                });
+                c.AddSecurityRequirement(security);
+            });
+        }
+
+        public static void ConfigureDependencies(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext&lt;DotNetRuServerContext&gt;(options =&gt;
+                options.UseSqlServer(configuration.GetConnectionString(&quot;Database&quot;)));
+
+            services.AddTransient&lt;IAuthService, AuthService&gt;();
+        }
+
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =&gt; { options.AddPolicy(&quot;MyCorsPolicy&quot;, corsBuilder.Build()); });
+        }
+</code></pre>
+<p>If you put those metods to the different files in your project structure, to my mind, reading code would be much easier</p>
+<p>for a programmer. Because he see scoped code (like db configuration) and isn't bothered by swagger's stuff, for example.</p>
+
+<h2>Conclusion</h2>
+
+That’s all, thank you for you attention!
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

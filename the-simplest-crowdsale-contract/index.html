@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The simplest crowdsale contract - Egor Grishechko's Blog</title>
+    <meta name="description" content="Creating smart contracts for crowdsale is easier than you think">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>The simplest crowdsale contract</h1>
+                <div class="post-meta">
+                    <time datetime="2018-02-03">February 03, 2018</time>
+                    <div class="tags"><span class="tag">solidity</span> <span class="tag">blockchain</span> <span class="tag">ethereum</span> <span class="tag">ICO</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>If we start to speak about 2017, I’ll say “That year was about cryptocurrency. Even my mom knows about Bitcoin”. Also that year stand in the people’s memory like age of ICO.</p>
+
+<h2>A bit of theory</h2>
+
+What is <code>ICO</code>? It’s <code>Initial Coin Offering</code>. Simple explanation is about making new cryptocurrency on the base of Ethereum blockchain. I won’t tell you details about working process of that blockchain, because we are here because of code.
+What is smart contract? That is a piece of code uploaded to the blockchain and working there. For writing them is used 
+<code>Solidity</code> language. In the example below you can watch the simplest smart contract.
+
+<pre><code class="language-javascript">pragma solidity ^0.4.18;
+
+contract HelloWorld {
+
+    function getData() public constant returns (string) {
+        return &quot;Hello, world!&quot;;
+    }    
+}
+</code></pre>
+
+<code>Contract</code> keyword has the same meaning like <code>class</code> word in every OOP language. So, there is a class with one method returning ‘Hello, world!’. <code>constant</code> signature means that we read data from blockchain and not changing its state. If change state of the variables we spend <code>gas</code> for it. <code>gas</code> is special resource metrics used for measuring your impact on Ethereum
+<p>(because when you change the variable, it’ll change on every Ethereum’s node). You pay for gas in ether.</p>
+<p>If you want to make ICO, you need two contracts (to tell the truth the real ICO contains a huge amount of them, but technically you need only two)</p>
+
+<h2>Token</h2>
+
+In a few words, <code>token</code> is crypto coin which working on the base of Ethereum blockchain. In other two words you make your own cryptocurrency.
+Token contract should implement <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md">ERC20</a>  standard. Without this implementation wallets would’t recognize your token.
+But you should be happy, there are a few of tools that can help you with its implementation. First one is <a href="https://github.com/OpenZeppelin/zeppelin-solidity">zeppelin-solidity</a>, it’s the open source framework which contains great recipes and templates for writing your own code. You can install it with NPM package-manager. 
+The second one is flexible deploy tool called <a href="https://github.com/trufflesuite/truffle">truffle</a>.
+So, the simplest token can be created with the simplest code. 
+
+<pre><code class="language-javascript">pragma solidity ^0.4.17;
+
+import &quot;zeppelin-solidity/contracts/token/MintableToken.sol&quot;;
+
+contract TheSimplestToken is MintableToken {
+    string public constant name = &quot; TheSimplestToken &quot;;
+    string public constant symbol = &quot;TST&quot;;
+    uint32 public constant decimals = 18;
+}
+</code></pre>
+
+<p>This is <code>mintable</code> token, it means that you can mint new tokens without any problems.</p>
+
+<h2>Crowdsale</h2>
+
+<code>Crowdsale</code> contract is needed for the token sale. That contract takes ether and give tokens. 
+
+<pre><code class="language-javascript">contract TheSimplestCrowdsale {
+    address owner;
+    TheSimplestToken  public token = new TheSimplestToken();
+    uint start = 1516713344;
+    uint period = 20;
+
+    function TheSimplestCrowdsale() {
+        owner = msg.sender;
+    }
+
+    function() external payable {
+        require(now &gt; start &amp;&amp; now &lt; start + period<em>24</em>60*60);
+        owner.transfer(msg.value);
+        token.mint(msg.sender, msg.value);
+    }
+}
+</code></pre>
+
+<p>Those few lines describe one of the easiest crowdsale contract ever. When people send you money, <code>fallback</code> function (name for the function without name and with payable modificator) will raise and send them tokens.</p>
+
+<h2>Conclusion</h2>
+
+Now you are ready for the your first ICO. I strongly recommend you to use truffle for deploying contracts. The tool can be installed by NPM and can make your deploying life much better.
+
+That’s all, thank you for you attention!
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

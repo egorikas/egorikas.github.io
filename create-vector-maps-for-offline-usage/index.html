@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to generate vector tiles for offline using from OSM metadata - Egor Grishechko's Blog</title>
+    <meta name="description" content="Guide about creating vector maps which can be read by Mapsforge software">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>How to generate vector tiles for offline using from OSM metadata</h1>
+                <div class="post-meta">
+                    <time datetime="2018-04-22">April 22, 2018</time>
+                    <div class="tags"><span class="tag">open source</span> <span class="tag">open street map</span> <span class="tag">.net core</span> <span class="tag">.net</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to talk about generating vector tiles for offline using from OSM metadata.</p>
+<p>I'll tell you about my journeys with them and give some links. Let's get started.</p>
+
+<h2>Why did I need them?</h2>
+Once, I wrote a  about <a href="http://egorikas.com/download-open-street-tiles-for-offline-using/">blog-post</a> dowloading open street maps tiles.
+After release, client decided to switch application from usual tiles to vector ones. And that was the strange journey, but I want to share this expirience with you.
+
+<h2>Why Mapsforge?</h2>
+<a href="https://github.com/mapsforge/mapsforge">Mapsforge</a> is an open-source solution and the client wanted to use it)
+
+<h2>So, what should I do?</h2>
+
+First of all, you need to dowload a file with OSM raw-data. In my case I needed the whole planet's map (because the client wanted to generate different places from it), so 
+I downloaded a file for the whole <a href="https://wiki.openstreetmap.org/wiki/Planet.osm#Processing_the_File">planet</a> ......
+
+<h2>A few days later...</h2>
+
+After the file had been downloaded, I started to investigate, what I could do with it.
+So, this is the list of steps.
+1. Read about <a href="https://github.com/cgeo/cgeo/wiki/How-to-create-your-own-offline-maps">generation maps for Mapsforge</a>
+2. Read about <a href="https://wiki.openstreetmap.org/wiki/Osmosis">Osmosis tool</a> and <a href="https://github.com/openstreetmap/osmosis">grab it</a>
+3. Read about <a href="https://github.com/mapsforge/mapsforge/blob/master/docs/Getting-Started-Map-Writer.md">mapsforge map-writer</a>
+4. Configure <code>osmosis</code> and <code>mapsforge map-writer</code>
+
+<h2>Generation</h2>
+
+You need to call the commands 
+
+<pre><code>osmosis --read-pbf planet-latest.osm.pbf --bounding-box top={top} left={left} bottom={bottom} right={right} --write-pbf map.pbf
+osmosis --rb file=&quot;map.pbf&quot; --mapfile-writer file=&quot;map.map&quot;
+</code></pre>
+
+<p>Coordinates for <code>left|bottom|right|top</code>, you can check at <a href="http://tools.geofabrik.de/calc/">tiles calculator</a></p>
+<figure class="align-center" style="width: 422px; height: 391px">
+	<a href="/assets/images/osm/choosing_osmosis.png"><img src="/assets/images/osm/choosing_osmosis.png"></a>
+</figure>
+
+<h2>An hour later ...</h2>
+
+Generating of one map takes about an hour. So, just wait and you get a result.
+
+<h2>P.S. for C# developers</h2>
+
+There is a possibility to use <code>.net</code> libraries instead of 
+
+<pre><code>osmosis --read-pbf planet-latest.osm.pbf --bounding-box top={top} left={left} bottom={bottom} right={right} --write-pbf map.pbf
+</code></pre>
+
+<p>Go to <a href="https://github.com/OsmSharp/">OsmSharp's repo</a>. These guys did a great job and you can parse <code>some_area.osm.pbf</code> without osmosis.</p>
+<p>It's regrettable, but I haven't find the solution for generating vector maps in geofabrik format without <code>mapsforge map-writer</code>.</p>
+
+<h2>Conclusion</h2>
+
+That’s all, thank you for you attention!
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max and Min heap implementation with C# - Egor Grishechko's Blog</title>
+    <meta name="description" content="The easiest implementation of Max and Min heap.">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>Max and Min heap implementation with C#</h1>
+                <div class="post-meta">
+                    <time datetime="2018-04-22">April 22, 2018</time>
+                    <div class="tags"><span class="tag">computer science</span> <span class="tag">hackerrank</span> <span class="tag">.net core</span> <span class="tag">.net</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to talk about implementation of Max and Min heap with C#.</p>
+
+<h2>The reason why you can need them</h2>
+Three or four months ago I understood that resolving tasks at <a href="https://www.hackerrank.com/">hackerrank</a> can make you better programmer and gives basic understanding of efficient algorithms.
+There are a lot of tasks there should be implemented with <code>heap</code>. But we don't have <code>heap</code> in <code>.net</code> core library.
+
+<h2>Implementation</h2>
+
+There are two common ways for implementing heaps. The first one is using list of nodes, where every node contains two child nodes.
+Using array is the second one (I preferred this one).
+
+Gayle Laakmann McDowell gives a good <a href="https://www.youtube.com/watch?v=t0Cq6tVNRBA">explanation</a> about implementation of the data structure.
+
+<h2>Min heap</h2>
+<pre><code class="language-csharp">        public class MinHeap
+        {
+            private readonly int[] _elements;
+            private int _size;
+
+            public MinHeap(int size)
+            {
+                _elements = new int[size];
+            }
+
+            private int GetLeftChildIndex(int elementIndex) =&gt; 2 * elementIndex + 1;
+            private int GetRightChildIndex(int elementIndex) =&gt; 2 * elementIndex + 2;
+            private int GetParentIndex(int elementIndex) =&gt; (elementIndex - 1) / 2;
+
+            private bool HasLeftChild(int elementIndex) =&gt; GetLeftChildIndex(elementIndex) &lt; _size;
+            private bool HasRightChild(int elementIndex) =&gt; GetRightChildIndex(elementIndex) &lt; _size;
+            private bool IsRoot(int elementIndex) =&gt; elementIndex == 0;
+
+            private int GetLeftChild(int elementIndex) =&gt; _elements[GetLeftChildIndex(elementIndex)];
+            private int GetRightChild(int elementIndex) =&gt; _elements[GetRightChildIndex(elementIndex)];
+            private int GetParent(int elementIndex) =&gt; _elements[GetParentIndex(elementIndex)];
+
+            private void Swap(int firstIndex, int secondIndex)
+            {
+                var temp = _elements[firstIndex];
+                _elements[firstIndex] = _elements[secondIndex];
+                _elements[secondIndex] = temp;
+            }
+
+            public bool IsEmpty()
+            {
+                return _size == 0;
+            }
+
+            public int Peek()
+            {
+                if (_size == 0)
+                    throw new IndexOutOfRangeException();
+
+                return _elements[0];
+            }
+
+            public int Pop()
+            {
+                if (_size == 0)
+                    throw new IndexOutOfRangeException();
+
+                var result = _elements[0];
+                _elements[0] = _elements[_size - 1];
+                _size--;
+
+                ReCalculateDown();
+
+                return result;
+            }
+
+            public void Add(int element)
+            {
+                if (_size == _elements.Length)
+                    throw new IndexOutOfRangeException();
+
+                _elements[_size] = element;
+                _size++;
+
+                ReCalculateUp();
+            }
+
+            private void ReCalculateDown()
+            {
+                int index = 0;
+                while (HasLeftChild(index))
+                {
+                    var smallerIndex = GetLeftChildIndex(index);
+                    if (HasRightChild(index) &amp;&amp; GetRightChild(index) &lt; GetLeftChild(index))
+                    {
+                        smallerIndex = GetRightChildIndex(index);
+                    }
+
+                    if (_elements[smallerIndex] &gt;= _elements[index])
+                    {
+                        break;
+                    }
+
+                    Swap(smallerIndex, index);
+                    index = smallerIndex;
+                }
+            }
+
+            private void ReCalculateUp()
+            {
+                var index = _size - 1;
+                while (!IsRoot(index) &amp;&amp; _elements[index] &lt; GetParent(index))
+                {
+                    var parentIndex = GetParentIndex(index);
+                    Swap(parentIndex, index);
+                    index = parentIndex;
+                }
+            }
+        }
+</code></pre>
+
+<p>We are using array as a storage for members of the heap. And doing a few calculation after every add/remove from the top. (The implementation is the same as in the <a href="https://www.youtube.com/watch?v=t0Cq6tVNRBA">video</a>).</p>
+
+<h2>Max heap</h2>
+If you want to create <code>Max heap</code>, you need to change those methods:
+
+<pre><code class="language-csharp">            private void ReCalculateDown()
+            {
+                int index = 0;
+                while (HasLeftChild(index))
+                {
+                    var biggerIndex = GetLeftChildIndex(index);
+                    if (HasRightChild(index) &amp;&amp; GetRightChild(index) &gt; GetLeftChild(index))
+                    {
+                        biggerIndex = GetRightChildIndex(index);
+                    }
+
+                    if (_elements[biggerIndex] &lt; _elements[index])
+                    {
+                        break;
+                    }
+
+                    Swap(biggerIndex, index);
+                    index = biggerIndex;
+                }
+            }
+
+            private void ReCalculateUp()
+            {
+                var index = _size - 1;
+                while (!IsRoot(index) &amp;&amp; _elements[index] &gt; GetParent(index))
+                {
+                    var parentIndex = GetParentIndex(index);
+                    Swap(parentIndex, index);
+                    index = parentIndex;
+                }
+            }
+</code></pre>
+
+<h2>P.S.</h2>
+Solving tasks on <a href="https://www.hackerrank.com/">hackerrank</a> is fun. And I recommend you to try it.
+
+<h2>Conclusion</h2>
+
+That’s all, thank you for you attention!
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
