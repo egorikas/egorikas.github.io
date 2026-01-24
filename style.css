@@ -56,15 +56,26 @@ main {
 /* Intro Section */
 .intro {
     margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
-.intro h1 {
+.bio-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.intro-text h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
     color: #1a1a1a;
 }
 
-.intro p {
+.intro-text p {
     font-size: 1.2rem;
     color: #586069;
 }
@@ -264,7 +275,12 @@ footer {
         padding: 2rem 1rem;
     }
 
-    .intro h1 {
+    .intro {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .intro-text h1 {
         font-size: 2rem;
     }
 
