@@ -17,9 +17,6 @@ header {
     background: #fff;
     border-bottom: 1px solid #e1e4e8;
     padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 nav {
