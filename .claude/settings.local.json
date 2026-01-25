@@ -4,7 +4,9 @@
       "Bash(for f in _posts/*.md)",
       "Bash(done)",
       "Bash(python3:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
