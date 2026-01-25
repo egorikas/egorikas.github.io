@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NEKFN2R84R"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NEKFN2R84R');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My custom prompt for Claude Code - Egor Grishechko's Blog</title>
+    <meta name="description" content="How I customized Claude Code to be direct, efficient, and stop the unnecessary explanations">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Egor Grishechko</a>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post">
+            <header class="post-header">
+                <h1>My custom prompt for Claude Code</h1>
+                <div class="post-meta">
+                    <time datetime="2026-01-25">January 25, 2026</time>
+                    <div class="tags"><span class="tag">AI</span> <span class="tag">tools</span> <span class="tag">productivity</span> <span class="tag">claude</span></div>
+                </div>
+            </header>
+
+            <div class="post-content">
+                <p>Hi everyone! Today I want to share my custom prompt for Claude Code that makes it work exactly how I need it to work.</p>
+
+<p>Last month I've been using Claude Code for coding. It's a great tool, but default behavior was driving me crazy. Claude was too verbose, added unnecessary explanations, and sometimes made changes without being sure about them. So I decided to create a custom prompt that fixes all these problems.</p>
+
+<h2>What was the problem?</h2>
+
+When you use Claude Code by default, you might notice that it:
+<ul>
+<li>Adds phrases like "Here's what I found..." before every answer</li>
+<li>Explains code after making changes even when you didn't ask</li>
+<li>Makes assumptions without asking for clarification</li>
+<li>Sometimes guesses instead of checking documentation</li>
+</ul>
+
+<p>For me, this was wasting time. I just want Claude to do what I ask, without all the extra talking.</p>
+
+<h2>The solution</h2>
+
+Claude Code supports custom prompts through <code>CLAUDE.md</code> file. You can create it in <code>~/.claude/CLAUDE.md</code> for global settings or in your project's <code>.claude/</code> directory.
+
+I created a prompt that fixes all my problems:
+
+<pre><code class="language-markdown"># Global Claude Instructions
+
+## Communication Style Preferences
+
+### Tone and Directness
+- Be direct and to the point
+- No unnecessary preamble or explanations unless asked
+- Answer questions concisely
+- Don't add phrases like "Here's what I found..." or "Let me explain..."
+- If I ask you to do something, just do it without narrating
+
+### Making Changes
+- Don't make assumptions - ask for clarification when uncertain
+- Research and verify before making changes (use documentation when needed)
+- Be 100% confident in your changes
+- If you're not sure, say so explicitly
+- Think carefully before acting
+- Double-checks any links you suggest
+
+### Error Handling
+- When something fails, provide clear error messages
+- Don't hide failures or errors
+- Explain what went wrong and why
+
+### Code Quality
+- Write clean, maintainable code
+- Follow existing code patterns in the repository
+- Don't over-engineer solutions
+- Prefer simple, clear implementations over clever ones
+
+### Validation
+- Verify assumptions before implementing
+- Test logic before suggesting it
+- Use external documentation when available
+- Double-check syntax and parameters
+
+### General
+- Don't repeat yourself
+- Focus on what I asked for
+- Don't add extra features unless requested
+- Keep responses short and relevant
+</code></pre>
+
+<h2>What changed?</h2>
+
+After adding this prompt, Claude Code became much better:
+
+<p><strong>Before:</strong> "I'll help you fix this issue. Let me first read the file to understand the current implementation. After analyzing the code, I can see that the problem is... Here's what I'm going to do..."</p>
+
+<p><strong>After:</strong> [Just fixes the issue]</p>
+
+<p>It's simple. When I ask "what is 2+2?", I get "4", not "Let me calculate this for you. The answer to your mathematical question is 4. I hope this helps!"</p>
+
+<h2>How to use it</h2>
+
+Just create <code>~/.claude/CLAUDE.md</code> file and paste the prompt from above. That's all. Claude Code will use these instructions for all your projects.
+
+If you want project-specific settings, create <code>.claude/CLAUDE.md</code> in your project directory.
+
+<h2>Conclusion</h2>
+
+That's all. I'll be happy, If this prompt helps you make Claude Code work better for you.
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Egor Grishechko. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
